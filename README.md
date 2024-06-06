@@ -1,1 +1,1 @@
-# 42-LRFinal
+# 42Cub3D-LR
