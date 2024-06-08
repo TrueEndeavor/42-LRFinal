@@ -6,7 +6,7 @@
 /*   By: lannur-s <lannur-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 11:51:43 by lannur-s          #+#    #+#             */
-/*   Updated: 2024/06/05 15:04:01 by lannur-s         ###   ########.fr       */
+/*   Updated: 2024/06/08 20:46:22 by lannur-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,23 +64,44 @@ void	free_textures(t_data *data)
 
 void	destroy_images(t_data *data)
 {
-	if (data->north_texture)
-		mlx_destroy_image(data->mlx_ptr, data->north_texture);
-	if (data->east_texture)
-		mlx_destroy_image(data->mlx_ptr, data->east_texture);
-	if (data->south_texture)
-		mlx_destroy_image(data->mlx_ptr, data->south_texture);
-	if (data->west_texture)
-		mlx_destroy_image(data->mlx_ptr, data->west_texture);
-	data->north_texture = NULL;
-	data->east_texture = NULL;
-	data->south_texture = NULL;
-	data->west_texture = NULL;
+	if (data->textures.north_texture)
+	{
+		mlx_destroy_image(data->mlx_ptr, data->textures.north_texture);
+		free(data->textures.north_texture);
+	}
+	if (data->textures.east_texture)
+	{
+		mlx_destroy_image(data->mlx_ptr, data->textures.east_texture);
+		free(data->textures.east_texture);
+	}
+	if (data->textures.south_texture)
+	{
+		mlx_destroy_image(data->mlx_ptr, data->textures.south_texture);
+		free(data->textures.south_texture);
+	}
+	if (data->textures.west_texture)
+	{
+		mlx_destroy_image(data->mlx_ptr, data->textures.west_texture);
+		free(data->textures.west_texture);
+	}
+	data->textures.north_texture = NULL;
+	data->textures.east_texture = NULL;
+	data->textures.south_texture = NULL;
+	data->textures.west_texture = NULL;
 }
 
 int	on_destroy(t_data *data)
 {
+	if (data->mlx_ptr)
+	{
+		if (data->win_ptr)
+			mlx_destroy_window(data->mlx_ptr, data->win_ptr);
+		mlx_destroy_display(data->mlx_ptr);
+		free(data->mlx_ptr);
+	}
+	destroy_images(data);
 	free_maps(data);
 	free_textures(data);
+	(void) *data;
 	exit(0);
 }

@@ -6,12 +6,11 @@
 /*   By: lannur-s <lannur-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:05:12 by lannur-s          #+#    #+#             */
-/*   Updated: 2024/06/06 15:43:48 by lannur-s         ###   ########.fr       */
+/*   Updated: 2024/06/08 20:17:45 by lannur-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
-#include <stdio.h>
 
 void	allocate_memory(t_data *data)
 {
@@ -26,6 +25,18 @@ void	allocate_memory(t_data *data)
 	}
 }
 
+void	set_player_direction(t_game *game, char direction)
+{
+	if (direction == 'N')
+		set_player_direction_north(game);
+	else if (direction == 'S')
+		set_player_direction_south(game);
+	else if (direction == 'E')
+		set_player_direction_east(game);
+	else if (direction == 'W')
+		set_player_direction_west(game);
+}
+
 void	initialize_world_map(t_data *data, int i, int j)
 {
 	if (data->dup_map[i][j] == '1')
@@ -35,8 +46,9 @@ void	initialize_world_map(t_data *data, int i, int j)
 	else if (data->dup_map[i][j] == 'N' || data->dup_map[i][j] == 'E' || \
 		data->dup_map[i][j] == 'S' || data->dup_map[i][j] == 'W')
 	{
-		data->game.pos_x = i;
-		data->game.pos_y = j;
+		set_player_direction(&data->game, data-> dup_map[i][j]);
+		data->game.pos_x = i + 0.2;
+		data->game.pos_y = j + 0.2;
 		data->game.player_dir = data->dup_map[i][j];
 		data->world_map[i][j] = 0;
 	}

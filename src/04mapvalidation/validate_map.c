@@ -6,7 +6,7 @@
 /*   By: lannur-s <lannur-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/28 12:44:27 by lannur-s          #+#    #+#             */
-/*   Updated: 2024/06/05 16:18:28 by lannur-s         ###   ########.fr       */
+/*   Updated: 2024/06/08 20:15:22 by lannur-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,23 @@ int	validate_map_info(t_data *data)
 	return (1);
 }
 
+int	validate_map_content(t_data *data)
+{
+	if (!check_chars(data))
+	{
+		display_error("Invalid char(s) in map");
+		return (0);
+	}
+	if (!check_map_size(data))
+		return (0);
+	return (1);
+}
+
 int	validate_map(t_data *data)
 {
 	int	status;
 
-	if (!check_map_size(data))
-		return (0);
-	if (!check_chars(data))
-		display_error("Invalid char(s) in map");
+	validate_map_content(data);
 	status = check_walls(data);
 	if (status != 1)
 	{

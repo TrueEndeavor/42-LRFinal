@@ -6,7 +6,7 @@
 /*   By: lannur-s <lannur-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 12:00:14 by lannur-s          #+#    #+#             */
-/*   Updated: 2024/06/06 15:51:02 by lannur-s         ###   ########.fr       */
+/*   Updated: 2024/06/08 20:17:40 by lannur-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -242,5 +242,9 @@ void				print_colors(t_data *data);
 void				print_content(void *c);
 void				print_map(t_data *data);
 bool				is_invalid_line(char *line);
+void				set_player_direction_north(t_game *game);
+void				set_player_direction_east(t_game *game);
+void				set_player_direction_south(t_game *game);
+void				set_player_direction_west(t_game *game);
 
 #endif

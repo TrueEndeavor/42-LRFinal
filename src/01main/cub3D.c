@@ -6,7 +6,7 @@
 /*   By: lannur-s <lannur-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 12:36:05 by lannur-s          #+#    #+#             */
-/*   Updated: 2024/06/05 18:11:26 by lannur-s         ###   ########.fr       */
+/*   Updated: 2024/06/08 20:48:59 by lannur-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,9 @@ void	setup_hooks(t_data *data)
 {
 	mlx_hook(data->win_ptr, KeyRelease, KeyReleaseMask, &on_keypress, data);
 	mlx_hook(data->win_ptr, MotionNotify, PointerMotionMask, &on_mouse, data);
-	mlx_loop_hook(data->mlx_ptr, render, data);
 	mlx_hook(data->win_ptr, DestroyNotify, StructureNotifyMask, \
 		&on_destroy, data);
+	mlx_loop_hook(data->mlx_ptr, render, data);
 }
 
 int	main(int ac, char **av)

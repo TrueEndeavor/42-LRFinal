@@ -6,7 +6,7 @@
 /*   By: lannur-s <lannur-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 11:32:27 by lannur-s          #+#    #+#             */
-/*   Updated: 2024/06/06 16:20:59 by lannur-s         ###   ########.fr       */
+/*   Updated: 2024/06/08 19:33:46 by lannur-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,22 +28,17 @@ void	trim_whitespace(char **line)
 	end[1] = '\0';
 }
 
-char	*trim_newline(char *str, bool flag)
+char	*trim_newline(char *line, bool flag)
 {
 	int		len;
 
-	len = ft_strlen(str);
-	if (!flag)
+	len = ft_strlen(line);
+	if (len > 0 && line[len - 1] == '\n')
 	{
-		if (len > 0 && str[len - 1] == '\n')
-			str[len - 1] = '\0';
+		if (!(flag) || (flag && len > 1))
+			line[len - 1] = '\0';
 	}
-	if (flag)
-	{
-		if (len > 1 && str[len - 1] == '\n')
-			str[len - 1] = '\0';
-	}
-	return (str);
+	return (line);
 }
 
 int	is_texture_line(char *line)

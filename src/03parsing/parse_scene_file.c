@@ -6,34 +6,53 @@
 /*   By: lannur-s <lannur-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 13:49:07 by lannur-s          #+#    #+#             */
-/*   Updated: 2024/06/06 16:25:14 by lannur-s         ###   ########.fr       */
+/*   Updated: 2024/06/08 19:58:20 by lannur-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
-#include <stdio.h>
+
+int	validate_and_replace_spaces(char *line)
+{
+	int	len;
+	int	i;
+
+	i = 0;
+	len = ft_strlen(line);
+	while (i < len)
+	{
+		if (line[i] == ' ')
+			line[i] = '1';
+		i++;
+	}
+	return (len);
+}
 
 int	process_map_line(char *line, t_data *data)
 {
-	int		len;
+	int	len;
 
 	len = ft_strlen(line);
-	if (is_map_line(line) && (len == 1 && line[len - 1] == '\n'))
-		display_error("Empty line found in the map");
+	if (!is_map_line(line) && len == 1)
+		return (0);
 	if (is_map_line(line))
 	{
-		if (ft_strlen(line) > 0 || line[0] == '\n')
+		len = validate_and_replace_spaces(line);
+		if (len > 0 || line[0] == '\n')
 		{
 			if (load_map(data, line))
-			{
 				data->map_height++;
-			}
 			else
 			{
 				on_destroy(data);
 				return (0);
 			}
 		}
+	}
+	else
+	{
+		display_error("Invalid char in map");
+		return (0);
 	}
 	return (1);
 }
