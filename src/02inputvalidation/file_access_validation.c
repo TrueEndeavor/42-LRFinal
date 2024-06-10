@@ -6,7 +6,7 @@
 /*   By: lannur-s <lannur-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 12:41:39 by lannur-s          #+#    #+#             */
-/*   Updated: 2024/05/22 15:24:20 by lannur-s         ###   ########.fr       */
+/*   Updated: 2024/06/10 13:10:54 by lannur-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,15 @@ int	check_readable(t_data *data, char *scene_file)
 	{
 		if (errno == ENOENT)
 		{
-			display_error("File not found");
+			display_error("File not found", data);
 		}
 		else if (errno == EACCES)
 		{
-			display_error("File cannot be opened: Permission denied");
+			display_error("File cannot be opened: Permission denied", data);
 		}
 		else
 		{
-			display_error("File cannot be opened: Unknown error");
+			display_error("File cannot be opened: Unknown error", data);
 		}
 		on_destroy(data);
 		return (false);

@@ -6,17 +6,19 @@
 /*   By: lannur-s <lannur-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/28 09:33:13 by lannur-s          #+#    #+#             */
-/*   Updated: 2024/06/05 14:42:16 by lannur-s         ###   ########.fr       */
+/*   Updated: 2024/06/10 13:13:45 by lannur-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-int	display_error(char *str)
+int	display_error(char *str, t_data *data)
 {
 	write(1, "[ERROR] ", 8);
 	ft_putstr_fd(str, 1);
 	write(1, "\n", 1);
+	if (data)
+		on_destroy(data);
 	exit (1);
 }
 

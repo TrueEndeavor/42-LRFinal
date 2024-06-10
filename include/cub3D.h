@@ -6,7 +6,7 @@
 /*   By: lannur-s <lannur-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 12:00:14 by lannur-s          #+#    #+#             */
-/*   Updated: 2024/06/08 20:17:40 by lannur-s         ###   ########.fr       */
+/*   Updated: 2024/06/10 17:25:43 by lannur-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@
 # include <X11/keysym.h>
 # include "mlx.h"
 # include <math.h>
+# include <stdio.h>
 
 /* *****************************   CONSTANTS   *******************************/
 # define NORTH 1
@@ -52,8 +53,6 @@
 
 # define ERR_TEXTURE_FILE_CANNOT_OPEN 21
 # define ERR_COLOR_RGB_VALUES_MISSING 22
-
-# define ERR_MAP_POSITION_INVALID 31
 
 /* *****************************   STRUCTURES   *******************************/
 
@@ -148,16 +147,11 @@ typedef struct s_data
 	t_game			game;
 	t_textures		textures;
 	t_colors		colors;
-	t_list			*map;
 	int				map_height;
 	int				map_width;
-	void			*player_ptr;
+	t_list			*map;
 	int				**world_map;
 	char			**dup_map;
-	void			*north_texture;
-	void			*east_texture;
-	void			*south_texture;
-	void			*west_texture;
 }	t_data;
 
 /* *************************   INPUT VALIDATION   ****************************/
@@ -174,7 +168,7 @@ void				parse_texture_line(char *line, t_textures *textures);
 void				parse_color_line(char *line, t_colors *colors);
 void				parse_textures(int direction, t_textures *tex, char *line);
 bool				textures_are_valid(t_textures *textures);
-bool				texture_files_exist(t_textures *textures);
+bool				texture_files_exist(t_textures *textures, t_data *data);
 bool				colors_are_valid(t_colors *colors);
 bool				colors_have_valid_rgb(t_colors *colors);
 int					check_tex_col(t_data *data, bool tex_flag, bool col_flag);
@@ -184,7 +178,7 @@ int					set_dup_map(t_data *data);
 /* *************************   PARSING UTILS  ****************************/
 void				trim_whitespace(char **line);
 void				cleanup_and_exit(t_data *data, char *line, int fd, int err);
-void				handle_error(t_data *data, bool tex_flag, bool col_flag);
+void				handle_error(t_data *data, bool *flags, char *line, int fd);
 char				*trim_newline(char *str, bool flag);
 int					is_texture_line(char *line);
 int					is_color_line(char *line);
@@ -201,7 +195,7 @@ void				load_south_texture(t_data *data);
 void				load_west_texture(t_data *data);
 void				initialize_ray_steps(t_data *data, t_ray *ray);
 void				calculate_ray_parameters(t_data *data, int x, t_ray *ray);
-int					check_texture_file(char *file_name);
+int					check_texture_file(char *file_name, t_data *data);
 unsigned long		rgb_to_hex(t_rgb color);
 void				free_dup_map(t_data *data);
 int					load_map(t_data *data, char *line);
@@ -236,7 +230,7 @@ void				parse_line(char *l, t_data *d, bool *tflag, bool *cflag);
 void				process_texture_or_color(char *l, t_data *d, bool *f);
 void				check_basic(t_data *data, char *line);
 void				destroy_images(t_data *data);
-int					display_error(char *str);
+int					display_error(char *str, t_data *data);
 char				*get_error_message(int error_code);
 void				print_colors(t_data *data);
 void				print_content(void *c);

@@ -6,11 +6,12 @@
 /*   By: lannur-s <lannur-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 13:49:07 by lannur-s          #+#    #+#             */
-/*   Updated: 2024/06/08 19:58:20 by lannur-s         ###   ########.fr       */
+/*   Updated: 2024/06/10 18:20:22 by lannur-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
+#include <stdio.h>
 
 int	validate_and_replace_spaces(char *line)
 {
@@ -51,13 +52,13 @@ int	process_map_line(char *line, t_data *data)
 	}
 	else
 	{
-		display_error("Invalid char in map");
+		display_error("Invalid char in map", data);
 		return (0);
 	}
 	return (1);
 }
 
-void	process_line(t_data *data, char *line, bool *flags)
+void	process_line(t_data *data, char *line, bool *flags, int fd)
 {
 	if (!line)
 	{
@@ -73,12 +74,12 @@ void	process_line(t_data *data, char *line, bool *flags)
 		else if (is_map_line(line))
 		{
 			if (flags[1] && flags[2])
-				handle_error(data, flags[1], flags[2]);
+				handle_error(data, flags, line, fd);
 			flags[0] = true;
 		}
 	}
 	if (flags[0] && !process_map_line(line, data))
-		display_error("Map is not the last of the file");
+		display_error("Map is not the last of the file", data);
 	free(line);
 }
 
@@ -97,15 +98,16 @@ void	parse_scene_file(t_data *data, char *scene_file)
 	line = get_next_line(fd);
 	if (!line)
 	{
-		display_error("The file is empty");
+		display_error("The file is empty", data);
 		on_destroy(data);
 		return ;
 	}
 	while (line)
 	{
-		process_line(data, line, flags);
+		process_line(data, line, flags, fd);
 		line = get_next_line(fd);
 	}
+	printf("last line =%s\n", line);
 	error_code = check_tex_col(data, flags[1], flags[2]);
 	cleanup_and_exit(data, line, fd, error_code);
 }

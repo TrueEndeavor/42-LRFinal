@@ -6,7 +6,7 @@
 /*   By: lannur-s <lannur-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 13:49:08 by lannur-s          #+#    #+#             */
-/*   Updated: 2024/06/04 13:01:45 by lannur-s         ###   ########.fr       */
+/*   Updated: 2024/06/10 13:13:26 by lannur-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	check_images_loading(t_data *data)
 	if (!data->textures.north_data || !data->textures.east_data || \
 		!data->textures.south_data || !data->textures.west_data)
 	{
-		display_error("Images not loaded properly");
+		display_error("Images not loaded properly", data);
 		on_destroy(data);
 	}
 }
@@ -38,7 +38,7 @@ int	set_up(t_data *data)
 		"Raycaster new");
 	if (!data->win_ptr)
 	{
-		display_error("Cannot open window");
+		display_error("Cannot open window", data);
 		on_destroy(data);
 		return (0);
 	}

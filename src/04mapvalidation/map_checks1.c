@@ -6,7 +6,7 @@
 /*   By: lannur-s <lannur-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 18:11:01 by lannur-s          #+#    #+#             */
-/*   Updated: 2024/06/08 19:47:13 by lannur-s         ###   ########.fr       */
+/*   Updated: 2024/06/10 13:12:54 by lannur-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,12 @@ int	check_map_size(t_data *data)
 {
 	if (ft_lstsize(data->map) <= 0)
 	{
-		display_error("Missing map info");
+		display_error("Missing map info", data);
 		return (0);
 	}
 	if (ft_lstsize(data->map) < 3)
 	{
-		display_error("The map size is too small");
+		display_error("The map size is too small", data);
 		return (0);
 	}
 	return (1);
@@ -45,7 +45,7 @@ int	check_chars(t_data *data)
 			if (c != '0' && c != '1' && c != 'N' && c != 'E' && \
 				c != 'S' && c != 'W' && c != ' ' && c != '\n')
 			{
-				display_error("Invalid char in map");
+				display_error("Invalid char in map", data);
 				return (0);
 			}
 			i++;

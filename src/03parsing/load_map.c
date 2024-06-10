@@ -6,7 +6,7 @@
 /*   By: lannur-s <lannur-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 19:07:20 by lannur-s          #+#    #+#             */
-/*   Updated: 2024/06/08 20:19:41 by lannur-s         ###   ########.fr       */
+/*   Updated: 2024/06/10 13:11:01 by lannur-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	load_map(t_data *data, char *line)
 	{
 		free(new->content);
 		free(new);
-		display_error("Invalid char in map");
+		display_error("Invalid char in map", data);
 		return (0);
 	}
 	ft_lstadd_back(&data->map, new);

@@ -6,7 +6,7 @@
 /*   By: lannur-s <lannur-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 11:26:25 by lannur-s          #+#    #+#             */
-/*   Updated: 2024/06/05 14:02:14 by lannur-s         ###   ########.fr       */
+/*   Updated: 2024/06/10 17:00:29 by lannur-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,12 @@ bool	textures_are_valid(t_textures *textures)
 			textures->we_count == 1);
 }
 
-bool	texture_files_exist(t_textures *textures)
+bool	texture_files_exist(t_textures *textures, t_data *data)
 {
-	return (check_texture_file(textures->north_texture) && \
-			check_texture_file(textures->east_texture) && \
-			check_texture_file(textures->south_texture) && \
-			check_texture_file(textures->west_texture));
+	return (check_texture_file(textures->north_texture, data) && \
+			check_texture_file(textures->east_texture, data) && \
+			check_texture_file(textures->south_texture, data) && \
+			check_texture_file(textures->west_texture, data));
 }
 
 bool	colors_are_valid(t_colors *colors)
@@ -46,9 +46,10 @@ bool	colors_have_valid_rgb(t_colors *colors)
 
 int	check_tex_col(t_data *data, bool tex_flag, bool col_flag)
 {
+printf("....in check_tex_col\n");
 	if (!textures_are_valid(&data->textures))
 		return (ERR_TEXTURE_MISSING_OR_DUPLICATED);
-	if (!texture_files_exist(&data->textures) && tex_flag)
+	if (!texture_files_exist(&data->textures, data) && tex_flag)
 		return (ERR_TEXTURE_FILE_CANNOT_OPEN);
 	if (!colors_are_valid(&data->colors))
 		return (ERR_COLOR_MISSING_OR_DUPLICATED);

@@ -6,7 +6,7 @@
 /*   By: lannur-s <lannur-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 14:10:26 by lannur-s          #+#    #+#             */
-/*   Updated: 2024/06/05 18:13:42 by lannur-s         ###   ########.fr       */
+/*   Updated: 2024/06/10 13:12:20 by lannur-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	init_dup_map(t_data *data)
 {
 	data->dup_map = ft_calloc((data->map_height + 1), sizeof(char *));
 	if (!data->dup_map)
-		display_error("Could not duplicate map");
+		display_error("Could not duplicate map", data);
 }
 
 void	replace_whitespace_with_walls(t_data *data, int i)
@@ -46,7 +46,7 @@ int	set_map(t_data *data, t_list *current)
 		{
 			data->dup_map[i] = ft_calloc(data->map_width + 1, sizeof(char));
 			if (!data->dup_map[i])
-				display_error("Could not duplicate map");
+				display_error("Could not duplicate map", data);
 			ft_strlcpy(data->dup_map[i], current->content, data->map_width + 1);
 		}
 		replace_whitespace_with_walls(data, i);
