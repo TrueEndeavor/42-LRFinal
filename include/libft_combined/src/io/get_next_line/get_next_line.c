@@ -6,7 +6,7 @@
 /*   By: lannur-s <lannur-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 15:33:11 by lannur-s          #+#    #+#             */
-/*   Updated: 2023/12/04 16:27:01 by lannur-s         ###   ########.fr       */
+/*   Updated: 2024/06/13 10:46:27 by lannur-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ char	*read_from_file(char *basin_buffer, int fd)
 /* at once. The explorer also handles edge cases and errors elegantly.        */
 /* -------------------------------------------------------------------------- */
 
-char	*get_next_line(int fd)
+char	*get_next_line(int fd, char **bb_ptr)
 {
 	static char	*basin_buffer;
 	char		*line;
@@ -136,5 +136,6 @@ char	*get_next_line(int fd)
 		return (free(basin_buffer), NULL);
 	line = extract_line(basin_buffer);
 	basin_buffer = obtain_remaining(basin_buffer);
+	*bb_ptr = basin_buffer;
 	return (line);
 }

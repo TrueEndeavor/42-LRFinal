@@ -6,7 +6,7 @@
 /*   By: lannur-s <lannur-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 16:29:56 by lannur-s          #+#    #+#             */
-/*   Updated: 2023/08/15 19:50:00 by lannur-s         ###   ########.fr       */
+/*   Updated: 2024/06/11 15:40:32 by lannur-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 #  define BUFFER_SIZE 3
 # endif
 
-char	*get_next_line(int fd);
+//char	*get_next_line(int fd);
+char	*get_next_line(int fd, char **bb_ptr);
 
 #endif

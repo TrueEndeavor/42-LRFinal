@@ -6,7 +6,7 @@
 /*   By: lannur-s <lannur-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 11:26:25 by lannur-s          #+#    #+#             */
-/*   Updated: 2024/06/10 17:00:29 by lannur-s         ###   ########.fr       */
+/*   Updated: 2024/06/11 10:27:41 by lannur-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ bool	colors_have_valid_rgb(t_colors *colors)
 
 int	check_tex_col(t_data *data, bool tex_flag, bool col_flag)
 {
-printf("....in check_tex_col\n");
 	if (!textures_are_valid(&data->textures))
 		return (ERR_TEXTURE_MISSING_OR_DUPLICATED);
 	if (!texture_files_exist(&data->textures, data) && tex_flag)

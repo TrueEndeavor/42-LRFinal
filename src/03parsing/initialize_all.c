@@ -6,7 +6,7 @@
 /*   By: lannur-s <lannur-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 13:49:07 by lannur-s          #+#    #+#             */
-/*   Updated: 2024/06/10 11:04:25 by lannur-s         ###   ########.fr       */
+/*   Updated: 2024/06/11 10:27:56 by lannur-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	init_all_texures(t_textures *textures)
 	textures->west_texture = NULL;
 	textures->north_img = NULL;
 	textures->east_img = NULL;
-	textures->south_img = NULL;	
+	textures->south_img = NULL;
 	textures->west_img = NULL;
 	textures->no_count = 0;
 	textures->ea_count = 0;

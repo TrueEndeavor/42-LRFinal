@@ -6,7 +6,7 @@
 /*   By: lannur-s <lannur-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 16:22:29 by lannur-s          #+#    #+#             */
-/*   Updated: 2024/06/10 18:29:52 by lannur-s         ###   ########.fr       */
+/*   Updated: 2024/06/13 13:56:15 by lannur-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,17 +46,7 @@ int	check_texture_file(char *file_name, t_data *data)
 	fd = open(file_name, O_RDONLY);
 	if (fd < 0 || read(fd, NULL, 0) < 0)
 	{
-		if (errno == EISDIR)
-			//display_error("Not a file. Is a dir", data);
-			return (0);
-		if (errno == ENOENT)
-			//display_error("File not found", data);
-			return (0);
-		else if (errno == EACCES)
-			//display_error("File cannot be opened: Permission denied", NULL);
-			return (0);
-		else
-			//display_error(strerror(errno), data);
+		if (errno && (errno == EISDIR || errno == ENOENT || errno == EACCES))
 			return (0);
 		return (1);
 	}
@@ -72,28 +62,24 @@ unsigned long	rgb_to_hex(t_rgb color)
 			(unsigned long)color.blue);
 }
 
-void	cleanup_and_exit(t_data *data, char *line, int fd, int error_code)
+void	cleanup_and_exit(t_cleanup_params *params)
 {
-printf("....in cleanup_and_exit\n");
-	if (line)
+	if (params->line)
 	{
-		printf("line before free : %s\n", line);
-		free(line);
+		free(params->line);
+		params->line = NULL;
 	}
-	printf("error_code before free : %d\n", error_code);	
-	if (error_code != 0)
-	{
-		display_error(get_error_message(error_code), data);
-		// on_destroy(data);
-	}
-	if (fd)
-		close(fd);
+	if (*(params->bb_str))
+		free(*(params->bb_str));
+	if (params->fd)
+		close(params->fd);
+	if (params->error_code != 0)
+		display_error(get_error_message(params->error_code), params->data);
 }
 
-void	handle_error(t_data *data, bool *flags, char *line, int fd)
+void	handle_error(t_data *data, bool *flags, t_cleanup_params *params)
 {
-	int	error_code;
-printf("....in handle error\n");
-	error_code = check_tex_col(data, flags[1], flags[2]);
-	cleanup_and_exit(data, line, fd, error_code);
+	params->error_code = check_tex_col(params->data, flags[1], flags[2]);
+	if (params->error_code != 0)
+		cleanup_and_exit(params);
 }

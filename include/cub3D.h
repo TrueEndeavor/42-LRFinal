@@ -6,7 +6,7 @@
 /*   By: lannur-s <lannur-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 12:00:14 by lannur-s          #+#    #+#             */
-/*   Updated: 2024/06/10 17:25:43 by lannur-s         ###   ########.fr       */
+/*   Updated: 2024/06/13 13:55:43 by lannur-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@
 # include <X11/keysym.h>
 # include "mlx.h"
 # include <math.h>
-# include <stdio.h>
 
 /* *****************************   CONSTANTS   *******************************/
 # define NORTH 1
@@ -53,6 +52,9 @@
 
 # define ERR_TEXTURE_FILE_CANNOT_OPEN 21
 # define ERR_COLOR_RGB_VALUES_MISSING 22
+
+# define ERR_MAP_NOT_LAST 31
+# define ERR_MAP_NOT_VALID 32
 
 /* *****************************   STRUCTURES   *******************************/
 
@@ -154,6 +156,16 @@ typedef struct s_data
 	char			**dup_map;
 }	t_data;
 
+typedef struct s_cleanup_params
+{
+	t_data	*data;
+	char	*line;
+	char	**bb_str;
+	int		fd;
+	int		error_code;
+	char	**bb_str;
+}	t_cleanup_params;
+
 /* *************************   INPUT VALIDATION   ****************************/
 void				init_data(t_data *data);
 void				initialize_game(t_game *game);
@@ -177,8 +189,8 @@ int					set_dup_map(t_data *data);
 
 /* *************************   PARSING UTILS  ****************************/
 void				trim_whitespace(char **line);
-void				cleanup_and_exit(t_data *data, char *line, int fd, int err);
-void				handle_error(t_data *data, bool *flags, char *line, int fd);
+void				cleanup_and_exit(t_cleanup_params *p);
+void				handle_error(t_cleanup_params *p);
 char				*trim_newline(char *str, bool flag);
 int					is_texture_line(char *line);
 int					is_color_line(char *line);
@@ -231,6 +243,7 @@ void				process_texture_or_color(char *l, t_data *d, bool *f);
 void				check_basic(t_data *data, char *line);
 void				destroy_images(t_data *data);
 int					display_error(char *str, t_data *data);
+int					show_error(char *str);
 char				*get_error_message(int error_code);
 void				print_colors(t_data *data);
 void				print_content(void *c);
@@ -240,5 +253,8 @@ void				set_player_direction_north(t_game *game);
 void				set_player_direction_east(t_game *game);
 void				set_player_direction_south(t_game *game);
 void				set_player_direction_west(t_game *game);
+void				free_dup_map(t_data *data);
+void				free_world_map(t_data *data);
+void				free_maps(t_data *data);
 
 #endif

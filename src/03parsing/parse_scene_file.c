@@ -6,7 +6,7 @@
 /*   By: lannur-s <lannur-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 13:49:07 by lannur-s          #+#    #+#             */
-/*   Updated: 2024/06/10 18:20:22 by lannur-s         ###   ########.fr       */
+/*   Updated: 2024/06/13 18:27:09 by lannur-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	validate_and_replace_spaces(char *line)
 	return (len);
 }
 
-int	process_map_line(char *line, t_data *data)
+int	process_map_line(char *line, t_data *data, int fd, char **bb_str)
 {
 	int	len;
 
@@ -52,16 +52,19 @@ int	process_map_line(char *line, t_data *data)
 	}
 	else
 	{
-		display_error("Invalid char in map", data);
+		free(line);
+		line = NULL;
+		cleanup_and_exit(data, line, fd, ERR_MAP_NOT_VALID, bb_str);
 		return (0);
 	}
 	return (1);
 }
 
-void	process_line(t_data *data, char *line, bool *flags, int fd)
+void	process_line(t_data *data, char *line, bool *flags, int fd, char **bb_str)
 {
 	if (!line)
 	{
+		printf("teste !line\n");
 		on_destroy(data);
 		return ;
 	}
@@ -73,41 +76,94 @@ void	process_line(t_data *data, char *line, bool *flags, int fd)
 			process_texture_or_color(line, data, flags);
 		else if (is_map_line(line))
 		{
+			printf("is mamp line : line = %s\n", line);
 			if (flags[1] && flags[2])
-				handle_error(data, flags, line, fd);
+				handle_error(data, flags, line, fd, bb_str);
 			flags[0] = true;
 		}
 	}
-	if (flags[0] && !process_map_line(line, data))
-		display_error("Map is not the last of the file", data);
-	free(line);
+	if (flags[0] && !process_map_line(line, data, fd, bb_str))
+	{
+		printf("I am here\n");
+		free (line);
+		//cleanup_and_exit(data, line, fd, ERR_MAP_NOT_LAST, bb_str);
+		cleanup_and_exit(&params);
+	}
+}
+
+void process_file(t_data *data, int fd, bool *flags, char **bb_str)
+{
+	char *line = NULL;
+	int start = 0;
+
+	while (1)
+	{
+		line = get_next_line(fd, bb_str);
+		printf("\n--------------------------------------\nline = %s\n", line);
+		if (!line && !start)
+		{
+			display_error("The file is empty", data);
+			on_destroy(data);
+			break ;
+		}
+		start = 1;
+		if (!line && start)
+			break ;
+		process_line(data, line, flags, fd, bb_str);
+		if (line)
+			free(line);
+		printf("\nEND\n");
+	}
+}
+void	initialize_flags(bool *flags)
+{
+	flags[0] = false;
+	flags[1] = false;
+	flags[2] = false;
 }
 
 void	parse_scene_file(t_data *data, char *scene_file)
 {
-	int		fd;
-	char	*line;
-	bool	flags[3];
-	int		error_code;
+	int					fd;
+	bool				flags[3];
+	char				*bb_str;
+/* 	char				*line;
+	int					error_code;
+	int					start; */
+	t_cleanup_params	params;
 
-	flags[0] = false;
-	flags[1] = false;
-	flags[2] = false;
-	error_code = 0;
+	initialize_flags(flags);
 	fd = check_readable(data, scene_file);
-	line = get_next_line(fd);
-	if (!line)
+	params.data = data;
+	params.line = NULL;
+	params.fd = fd;
+	params.error_code = check_tex_col(data, flags[1], flags[2]);
+	params.bb_str = &bb_str;
+
+	process_file(data, fd, flags, &bb_str);
+	/* error_code = 0;
+	line = NULL;
+	start = 0;
+	bb_str = NULL;
+	while (1)
 	{
-		display_error("The file is empty", data);
-		on_destroy(data);
-		return ;
+		line = get_next_line(fd, &bb_str);
+		printf("\n--------------------------------------\nline = %s\n", line);
+		if (!line && !start)
+		{
+			display_error("The file is empty", data);
+			on_destroy(data);
+			break ;
+		}
+		start = 1;
+		if (!line && start)
+			break ;
+		process_line(data, line, flags, fd, &bb_str);
+		if (line)
+			free (line);
+		printf("\nEND\n");
 	}
-	while (line)
-	{
-		process_line(data, line, flags, fd);
-		line = get_next_line(fd);
-	}
-	printf("last line =%s\n", line);
 	error_code = check_tex_col(data, flags[1], flags[2]);
-	cleanup_and_exit(data, line, fd, error_code);
+	cleanup_and_exit(data, line, fd, error_code, &bb_str); */
+	 cleanup_and_exit(&params);
 }

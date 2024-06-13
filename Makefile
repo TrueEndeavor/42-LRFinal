@@ -6,7 +6,7 @@
 #    By: lannur-s <lannur-s@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/15 13:43:15 by lannur-s          #+#    #+#              #
-#    Updated: 2024/06/08 20:11:34 by lannur-s         ###   ########.fr        #
+#    Updated: 2024/06/11 10:30:32 by lannur-s         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,7 +51,6 @@ SRCS			=	src/01main/cub3D.c \
 					src/dev/print_debug1.c	\
 					src/04mapvalidation/duplicate_map.c \
 					src/04mapvalidation/valid_map_utils.c \
-					src/06destroy/destroy.c \
 					src/05raycasting/setup.c \
 					src/05raycasting/load_textures.c \
 					src/05raycasting/events.c \
@@ -60,7 +59,9 @@ SRCS			=	src/01main/cub3D.c \
 					src/05raycasting/raycasting1.c \
 					src/05raycasting/move.c \
 					src/05raycasting/rotate.c \
-					src/05raycasting/draw.c
+					src/05raycasting/draw.c \
+					src/06destroy/destroy.c \
+					src/06destroy/destroy_maps.c
 
 OBJS_DIR = obj
 OBJS = $(SRCS:src/%.c=$(OBJS_DIR)/%.o)

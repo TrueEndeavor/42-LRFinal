@@ -6,7 +6,7 @@
 /*   By: lannur-s <lannur-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 18:11:01 by lannur-s          #+#    #+#             */
-/*   Updated: 2024/06/10 13:12:54 by lannur-s         ###   ########.fr       */
+/*   Updated: 2024/06/11 16:43:40 by lannur-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,11 @@ int	check_chars(t_data *data)
 		while (((char *)current->content)[i] != '\0')
 		{
 			c = ((char *)current->content)[i];
+			printf("check chars[%d] calling = %c\n", i, c);
 			if (c != '0' && c != '1' && c != 'N' && c != 'E' && \
 				c != 'S' && c != 'W' && c != ' ' && c != '\n')
 			{
-				display_error("Invalid char in map", data);
+				display_error("Invalid char in map_ check_chars fun", data);
 				return (0);
 			}
 			i++;
