@@ -6,7 +6,7 @@
 /*   By: lannur-s <lannur-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 13:49:07 by lannur-s          #+#    #+#             */
-/*   Updated: 2024/06/13 18:27:09 by lannur-s         ###   ########.fr       */
+/*   Updated: 2024/06/14 18:19:01 by lannur-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int	validate_and_replace_spaces(char *line)
 int	process_map_line(char *line, t_data *data, int fd, char **bb_str)
 {
 	int	len;
+	t_cleanup_params	params;	
 
 	len = ft_strlen(line);
 	if (!is_map_line(line) && len == 1)
@@ -54,7 +55,14 @@ int	process_map_line(char *line, t_data *data, int fd, char **bb_str)
 	{
 		free(line);
 		line = NULL;
-		cleanup_and_exit(data, line, fd, ERR_MAP_NOT_VALID, bb_str);
+		params.data = data;
+		params.line = line;
+		params.fd = fd;
+		params.error_code = 32;
+		params.bb_str = bb_str;
+		//cleanup_and_exit(data, line, fd, ERR_MAP_NOT_VALID, bb_str);
+		printf("err in process map line\n");
+		cleanup_and_exit(&params);
 		return (0);
 	}
 	return (1);
@@ -62,6 +70,9 @@ int	process_map_line(char *line, t_data *data, int fd, char **bb_str)
 
 void	process_line(t_data *data, char *line, bool *flags, int fd, char **bb_str)
 {
+
+	t_cleanup_params	params;
+	
 	if (!line)
 	{
 		printf("teste !line\n");
@@ -69,6 +80,11 @@ void	process_line(t_data *data, char *line, bool *flags, int fd, char **bb_str)
 		return ;
 	}
 	trim_newline(line, flags[0]);
+		params.data = data;
+		params.line = line;
+		params.fd = fd;
+		params.error_code = 0;
+		params.bb_str = bb_str;	
 	if (!flags[0])
 	{
 		check_basic(data, line);
@@ -78,24 +94,27 @@ void	process_line(t_data *data, char *line, bool *flags, int fd, char **bb_str)
 		{
 			printf("is mamp line : line = %s\n", line);
 			if (flags[1] && flags[2])
-				handle_error(data, flags, line, fd, bb_str);
+				handle_error(data, flags, &params);
+			//handle_error(data, flags, line, fd, bb_str);
 			flags[0] = true;
 		}
 	}
 	if (flags[0] && !process_map_line(line, data, fd, bb_str))
 	{
-		printf("I am here\n");
 		free (line);
 		//cleanup_and_exit(data, line, fd, ERR_MAP_NOT_LAST, bb_str);
+		printf("I am here\n");
 		cleanup_and_exit(&params);
 	}
 }
 
-void process_file(t_data *data, int fd, bool *flags, char **bb_str)
+void	process_file(t_data *data, int fd, bool *flags, char **bb_str)
 {
-	char *line = NULL;
-	int start = 0;
+	char	*line;
+	int		start;
 
+	line = NULL;
+	start = 0;
 	while (1)
 	{
 		line = get_next_line(fd, bb_str);
@@ -115,6 +134,7 @@ void process_file(t_data *data, int fd, bool *flags, char **bb_str)
 		printf("\nEND\n");
 	}
 }
+
 void	initialize_flags(bool *flags)
 {
 	flags[0] = false;
@@ -141,6 +161,7 @@ void	parse_scene_file(t_data *data, char *scene_file)
 	params.bb_str = &bb_str;
 
 	process_file(data, fd, flags, &bb_str);
+	print_textures(data);
 	/* error_code = 0;
 	line = NULL;
 	start = 0;
@@ -165,5 +186,5 @@ void	parse_scene_file(t_data *data, char *scene_file)
 	}
 	error_code = check_tex_col(data, flags[1], flags[2]);
 	cleanup_and_exit(data, line, fd, error_code, &bb_str); */
-	 cleanup_and_exit(&params);
+	//cleanup_and_exit(&params);
 }

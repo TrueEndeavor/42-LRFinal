@@ -6,7 +6,7 @@
 /*   By: lannur-s <lannur-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 11:32:27 by lannur-s          #+#    #+#             */
-/*   Updated: 2024/06/11 16:16:57 by lannur-s         ###   ########.fr       */
+/*   Updated: 2024/06/14 16:24:07 by lannur-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	*trim_newline(char *line, bool flag)
 
 	len = ft_strlen(line);
 	(void) flag;
-	printf("trim line len= %d\n, line= %s", len, line);
+	//printf("trim line len= %d\n, line= %s", len, line);
 	if (len > 0 && line[len - 1] == '\n')
 	{
 		//if (!(flag) || (flag && len > 1))

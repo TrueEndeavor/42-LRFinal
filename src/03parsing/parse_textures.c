@@ -6,11 +6,12 @@
 /*   By: lannur-s <lannur-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 17:47:25 by lannur-s          #+#    #+#             */
-/*   Updated: 2024/06/10 11:45:20 by lannur-s         ###   ########.fr       */
+/*   Updated: 2024/06/14 18:10:32 by lannur-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
+#include <stdio.h>
 
 void	get_texture(char *line, char **texture, int *count)
 {

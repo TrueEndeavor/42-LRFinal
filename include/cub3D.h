@@ -6,7 +6,7 @@
 /*   By: lannur-s <lannur-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 12:00:14 by lannur-s          #+#    #+#             */
-/*   Updated: 2024/06/13 13:55:43 by lannur-s         ###   ########.fr       */
+/*   Updated: 2024/06/14 16:23:17 by lannur-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,7 +160,6 @@ typedef struct s_cleanup_params
 {
 	t_data	*data;
 	char	*line;
-	char	**bb_str;
 	int		fd;
 	int		error_code;
 	char	**bb_str;
@@ -190,7 +189,8 @@ int					set_dup_map(t_data *data);
 /* *************************   PARSING UTILS  ****************************/
 void				trim_whitespace(char **line);
 void				cleanup_and_exit(t_cleanup_params *p);
-void				handle_error(t_cleanup_params *p);
+//void				handle_error(t_cleanup_params *p);
+void				handle_error(t_data *data, bool *flags, t_cleanup_params *params);
 char				*trim_newline(char *str, bool flag);
 int					is_texture_line(char *line);
 int					is_color_line(char *line);
