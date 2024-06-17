@@ -6,7 +6,7 @@
 /*   By: lannur-s <lannur-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 13:49:07 by lannur-s          #+#    #+#             */
-/*   Updated: 2024/06/17 11:21:20 by lannur-s         ###   ########.fr       */
+/*   Updated: 2024/06/17 12:23:57 by lannur-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,33 +34,27 @@ int	process_map_line(char *line, t_data *data, int fd, char **bb_str)
 	return (1);
 }
 
-void	process_line(t_data *data, char *line, bool *flags, int fd, char **bb_str)
+void	process_line(t_cleanup_params	*params, bool *flags)
 {
-	t_cleanup_params	params;
-
-	if (!line)
+	if (!params->line)
 	{
-		on_destroy(data);
+		on_destroy(params->data);
 		return ;
 	}
-	trim_newline(line, flags[0]);
-	params.data = data;
-	params.line = line;
-	params.fd = fd;
-	params.error_code = 0;
-	params.bb_str = bb_str;
-	process_basic_lines(data, line, flags, &params);
-	if (flags[0] && !process_map_line(line, data, fd, bb_str))
+	trim_newline(params->line, flags[0]);
+	process_basic_lines(params->data, params->line, flags, params);
+	if (flags[0] && !process_map_line(params->line, params->data, \
+		params->fd, params->bb_str))
 	{
-		free (line);
-		cleanup_and_exit(&params);
+		free (params->line);
+		cleanup_and_exit(params);
 	}
 }
 
 void	process_file(t_data *data, int fd, bool *flags, char **bb_str)
 {
-	char	*line;
-	int		start;
+	char				*line;
+	int					start;
 	t_cleanup_params	params;
 
 	line = NULL;
@@ -69,11 +63,7 @@ void	process_file(t_data *data, int fd, bool *flags, char **bb_str)
 	{
 		line = get_next_line(fd, bb_str);
 		if (!line && !start)
-		{
 			display_error("The file is empty", data);
-			on_destroy(data);
-			break ;
-		}
 		start = 1;
 		if (!line && start)
 			break ;
@@ -82,7 +72,7 @@ void	process_file(t_data *data, int fd, bool *flags, char **bb_str)
 		params.fd = fd;
 		params.error_code = 0;
 		params.bb_str = bb_str;
-		process_line(data, line, flags, fd, bb_str);
+		process_line(&params, flags);
 		if (line)
 			free(line);
 	}
