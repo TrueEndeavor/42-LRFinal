@@ -6,7 +6,7 @@
 /*   By: lannur-s <lannur-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 17:47:25 by lannur-s          #+#    #+#             */
-/*   Updated: 2024/06/17 11:03:14 by lannur-s         ###   ########.fr       */
+/*   Updated: 2024/06/17 17:59:54 by lannur-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,13 @@ void	get_texture(char *line, char **texture, int *count)
 
 int	get_direction(const char *line)
 {
-	if (ft_strncmp(line, "NO", 2) == 0)
+	if (ft_strncmp(line, "NO", 2) == 0 && ft_strncmp(line + 2, " ", 1) == 0)
 		return (NORTH);
-	if (ft_strncmp(line, "EA", 2) == 0)
+	if (ft_strncmp(line, "EA", 2) == 0 && ft_strncmp(line + 2, " ", 1) == 0)
 		return (EAST);
-	if (ft_strncmp(line, "SO", 2) == 0)
+	if (ft_strncmp(line, "SO", 2) == 0 && ft_strncmp(line + 2, " ", 1) == 0)
 		return (SOUTH);
-	if (ft_strncmp(line, "WE", 2) == 0)
+	if (ft_strncmp(line, "WE", 2) == 0 && ft_strncmp(line + 2, " ", 1) == 0)
 		return (WEST);
 	return (-1);
 }

@@ -6,7 +6,7 @@
 /*   By: lannur-s <lannur-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 16:22:29 by lannur-s          #+#    #+#             */
-/*   Updated: 2024/06/17 11:03:48 by lannur-s         ###   ########.fr       */
+/*   Updated: 2024/06/17 17:41:57 by lannur-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	parse_int(char **str)
 
 	num = 0;
 	sign = 1;
-	if (*str == NULL || **str == '\0')
+	if (*str == NULL || **str == '\0' || **str == ',')
 	{
 		return (-1);
 	}
@@ -70,7 +70,10 @@ void	cleanup_and_exit(t_cleanup_params *params)
 		params->line = NULL;
 	}
 	if (*(params->bb_str))
+	{
 		free(*(params->bb_str));
+		params->bb_str = NULL;
+	}
 	if (params->fd)
 		close(params->fd);
 	if ((params->error_code) && params->error_code > 0)

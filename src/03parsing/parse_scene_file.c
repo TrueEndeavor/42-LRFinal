@@ -6,7 +6,7 @@
 /*   By: lannur-s <lannur-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 13:49:07 by lannur-s          #+#    #+#             */
-/*   Updated: 2024/06/17 12:23:57 by lannur-s         ###   ########.fr       */
+/*   Updated: 2024/06/17 17:47:51 by lannur-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,29 +53,30 @@ void	process_line(t_cleanup_params	*params, bool *flags)
 
 void	process_file(t_data *data, int fd, bool *flags, char **bb_str)
 {
-	char				*line;
 	int					start;
 	t_cleanup_params	params;
 
-	line = NULL;
 	start = 0;
+	params.data = data;
+	params.fd = fd;
+	params.error_code = 0;
+	params.bb_str = bb_str;
 	while (1)
 	{
-		line = get_next_line(fd, bb_str);
-		if (!line && !start)
+		params.line = get_next_line(params.fd, params.bb_str);
+		if (!params.line && !start)
 			display_error("The file is empty", data);
 		start = 1;
-		if (!line && start)
+		if (!params.line && start)
 			break ;
-		params.data = data;
-		params.line = line;
-		params.fd = fd;
-		params.error_code = 0;
-		params.bb_str = bb_str;
 		process_line(&params, flags);
-		if (line)
-			free(line);
+		if (params.line)
+		{
+			free(params.line);
+			params.line = NULL;
+		}
 	}
+	handle_error(data, flags, &params);
 }
 
 void	parse_scene_file(t_data *data, char *scene_file)
