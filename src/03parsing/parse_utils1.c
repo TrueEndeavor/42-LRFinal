@@ -6,12 +6,11 @@
 /*   By: lannur-s <lannur-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 16:22:29 by lannur-s          #+#    #+#             */
-/*   Updated: 2024/06/14 18:18:30 by lannur-s         ###   ########.fr       */
+/*   Updated: 2024/06/17 11:03:48 by lannur-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
-#include <stdio.h>
 
 int	parse_int(char **str)
 {
@@ -74,7 +73,6 @@ void	cleanup_and_exit(t_cleanup_params *params)
 		free(*(params->bb_str));
 	if (params->fd)
 		close(params->fd);
-	printf("....the error_code is = %c\n", params->error_code);
 	if ((params->error_code) && params->error_code > 0)
 		display_error(get_error_message(params->error_code), params->data);
 }
@@ -85,7 +83,6 @@ void	handle_error(t_data *data, bool *flags, t_cleanup_params *params)
 	params->error_code = check_tex_col(params->data, flags[1], flags[2]);
 	if (params->error_code != 0)
 	{
-		printf("handle error\n");
 		cleanup_and_exit(params);
 	}
 }

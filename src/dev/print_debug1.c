@@ -6,12 +6,12 @@
 /*   By: lannur-s <lannur-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 17:44:25 by lannur-s          #+#    #+#             */
-/*   Updated: 2024/06/08 20:18:30 by lannur-s         ###   ########.fr       */
+/*   Updated: 2024/06/17 11:04:17 by lannur-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include "cub3D.h"
+#include <stdio.h>
 
 void	print_colors(t_data *data)
 {

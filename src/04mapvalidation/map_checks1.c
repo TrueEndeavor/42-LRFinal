@@ -6,7 +6,7 @@
 /*   By: lannur-s <lannur-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 18:11:01 by lannur-s          #+#    #+#             */
-/*   Updated: 2024/06/14 16:24:45 by lannur-s         ###   ########.fr       */
+/*   Updated: 2024/06/17 10:31:22 by lannur-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ int	process_chars(char *line, t_data *data)
 	while (line[i] != '\0')
 	{
 		c = line[i];
-		//printf("check chars[%d] calling = %c\n", i, c);
 		if (!is_valid_char(c))
 		{
 			display_error("Invalid char in map_ check_chars", data);

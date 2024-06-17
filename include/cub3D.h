@@ -6,7 +6,7 @@
 /*   By: lannur-s <lannur-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 12:00:14 by lannur-s          #+#    #+#             */
-/*   Updated: 2024/06/14 16:23:17 by lannur-s         ###   ########.fr       */
+/*   Updated: 2024/06/17 11:09:40 by lannur-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,7 +190,8 @@ int					set_dup_map(t_data *data);
 void				trim_whitespace(char **line);
 void				cleanup_and_exit(t_cleanup_params *p);
 //void				handle_error(t_cleanup_params *p);
-void				handle_error(t_data *data, bool *flags, t_cleanup_params *params);
+void				handle_error(t_data *data, bool *flags, \
+					t_cleanup_params *params);
 char				*trim_newline(char *str, bool flag);
 int					is_texture_line(char *line);
 int					is_color_line(char *line);
@@ -256,5 +257,12 @@ void				set_player_direction_west(t_game *game);
 void				free_dup_map(t_data *data);
 void				free_world_map(t_data *data);
 void				free_maps(t_data *data);
-
+void				initialize_flags(bool *flags);
+int					validate_and_replace_spaces(char *line);
+void				process_basic_lines(t_data *data, char *line, \
+					bool *flags,	t_cleanup_params *params);
+bool				should_process_line(char *line);
+bool				process_valid_map_line(char *line, t_data *data);
+void				handle_invalid_map_line(char *line, t_data *data, \
+					int fd, char **bb_str);
 #endif
