@@ -6,7 +6,7 @@
 /*   By: lannur-s <lannur-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 16:22:29 by lannur-s          #+#    #+#             */
-/*   Updated: 2024/06/17 17:41:57 by lannur-s         ###   ########.fr       */
+/*   Updated: 2024/06/18 11:48:15 by lannur-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,25 +15,30 @@
 int	parse_int(char **str)
 {
 	int	num;
-	int	sign;
 
 	num = 0;
-	sign = 1;
-	if (*str == NULL || **str == '\0' || **str == ',')
+	while (**str == ' ')
 	{
-		return (-1);
-	}
-	if (**str == '-')
-	{
-		sign = -1;
 		(*str)++;
 	}
-	while (**str >= '0' && **str <= '9')
+	if (!ft_isdigit(**str))
+		return (-1);
+	while (**str >= '0' && **str <= '9' && **str != ',' && **str != '\0')
 	{
+		if (num > 255)
+			return (-1);
 		num = num * 10 + (**str - '0');
 		(*str)++;
 	}
-	return (num * sign);
+	if (num < 0 || num > 255)
+	{
+		return (-1);
+	}
+	if (**str == ' ')
+		return (-1);
+	if (**str != '\0' && **str != ',')
+		return (-1);
+	return (num);
 }
 
 int	check_texture_file(char *file_name, t_data *data)

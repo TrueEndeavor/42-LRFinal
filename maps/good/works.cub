@@ -1,13 +1,17 @@
-NO textures/wolfenstein/purple_stone.xpm
-EA textures/wolfenstein/purple_stone.xpm
+NO textures/wolfenstein/blue_stone.xpm
+EA textures/wolfenstein/color_stone.xpm
 SO textures/wolfenstein/grey_stone.xpm
-WE textures/wolfenstein/grey_stone.xpm
+WE textures/wolfenstein/purple_stone.xpm
 
-F      17,    38,     64
-C      17,    50,     64
+C 35,19,73
+F 0,100,20
 
 
-11111111
-  10N01
-   1W0001
-11111111
+11111111111
+10000000001
+10000000001
+10E00000001
+10000000001
+10100000001
+10100000001
+11111111111

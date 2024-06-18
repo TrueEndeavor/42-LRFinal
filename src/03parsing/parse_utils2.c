@@ -6,7 +6,7 @@
 /*   By: lannur-s <lannur-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 16:22:29 by lannur-s          #+#    #+#             */
-/*   Updated: 2024/06/17 10:34:51 by lannur-s         ###   ########.fr       */
+/*   Updated: 2024/06/18 11:43:48 by lannur-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	check_basic(t_data *data, char *line)
 		on_destroy(data);
 		free(line);
 		line = NULL;
-		exit(EXIT_FAILURE);
+		exit(1);
 	}
 }
 

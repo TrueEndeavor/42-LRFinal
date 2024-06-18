@@ -1,18 +1,21 @@
-NO textures/wolfenstein/purple_stone.xpm
+NO cub3D-tester/textures/wall.xpm
+SO cub3D-tester/textures/bricks.xpm
+WE cub3D-tester/textures/matrix.xpm
+EA cub3D-tester/textures/wood.xpm
 
+F 220,111,119
+C 225,111,0
 
-
-EA textures/wolfenstein/purple_stone.xpm
-SO                       textures/wolfenstein/grey_stone.xpm
-WE textures/wolfenstein/grey_stone.xpm
-
-F      17,    38,     64
-C      17,    50,     64
-
-11111111111111
-     1E0010101
-111001111
-11101
-10001  1111111
-1111
-1
+ 1111111111111111111111
+100000000000S00000000001
+ 1000000000000000000001
+  10000000000000000001
+   100000000000000001
+    1000000000000001
+     10000000000001
+      100000000001
+       1000000001
+        10000001
+         101101
+          1001
+           11
